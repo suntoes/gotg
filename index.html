@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game of the Gods</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+      }
+
+      #gotg-board {
+        height: calc(100% - 100px);
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gotg-board"></div>
+    <button id="gotg-reset">reset game</button>
+    <h1 id="gotg-gui">loading...</h1>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js"></script>
+    <script type="module" src="gotg-lib/piece_structure/index.js"></script>
+    <script type="module" src="gotg.js"></script>
+  </body>
+</html>
