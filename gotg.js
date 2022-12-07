@@ -26,7 +26,9 @@ let darkTone = 0x808080
 let lightTone = 0xfafafa
 
 let TileUUIDs = new Set()
-let BoardState = FENLoader() 
+let BoardState = 
+  JSON.parse(localStorage.getItem('game-of-the-gods-session'))
+  || FENLoader() 
 let moveSet = []
 
 const rmvDash = str => str.split("-")[0] || ""
@@ -232,15 +234,7 @@ const updateFunc = time => {
 
     const resetThis = () => {
       BoardState = FENLoader()
-    }
-
-    const { boardState } =
-    JSON.parse(localStorage.getItem('game-of-the-gods-session')) || {}
-    const prevSeshTest = boardState?.turnCount && !boardState?.winner
-
-    const loadPrevious = () => {
-      setBoardState(boardState)
-      BoardState = boardState
+      localStorage.removeItem('game-of-the-gods-session')
     }
 
     document.getElementById('gotg-reset').onclick = resetThis
@@ -350,6 +344,7 @@ const updateFunc = time => {
       selectedPiece = undefined
       moveSet = []
       updateGui(BoardState)
+      localStorage.setItem('game-of-the-gods-session', JSON.stringify(BoardState))
     } else if (nearestPieceIntersect) { // If player picked a piece
       const select = rmvDash(nearestPieceIntersect.object.name)
       const { currentTurn: turn } = utils.TurnCountToSystem(
