@@ -237,6 +237,7 @@ const updateFunc = time => {
       moveSet = []
       selectedPiece = null
       isCastingRay = false
+      updateGui(BoardState)
       localStorage.removeItem('game-of-the-gods-session')
     }
 
