@@ -18,8 +18,9 @@ let camera = new THREE.PerspectiveCamera(
 let scene = new THREE.Scene()
 let raycaster = new THREE.Raycaster()
 let mouseClick = new THREE.Vector2()
-let selectedPiece
 let isCastingRay = false
+let selectedPiece
+let moveSet = []
 
 let tileSize = 1
 let darkTone = 0x808080
@@ -29,7 +30,6 @@ let TileUUIDs = new Set()
 let BoardState = 
   JSON.parse(localStorage.getItem('game-of-the-gods-session'))
   || FENLoader() 
-let moveSet = []
 
 const rmvDash = str => str.split("-")[0] || ""
 
@@ -234,6 +234,9 @@ const updateFunc = time => {
 
     const resetThis = () => {
       BoardState = FENLoader()
+      moveSet = []
+      selectedPiece = null
+      isCastingRay = false
       localStorage.removeItem('game-of-the-gods-session')
     }
 
