@@ -356,23 +356,31 @@ const updateFunc = time => {
           || (turn === 'd' && PieceHelper.isDark(select))
       //|| true
       if (turnPieceIsPicked) { // If picked piece is equal to turn side
-        selectedPiece = rmvDash(nearestPieceIntersect.object.name)
-        const rawMoveSet = PieceHelper.getMoveSet(selectedPiece, BoardState)
+        const tmpSelectedPiece = rmvDash(nearestPieceIntersect.object.name)
+        const rawMoveSet = PieceHelper.getMoveSet(tmpSelectedPiece, BoardState)
         const validatedMoveSet = utils.ValidateMoveSet(
-          selectedPiece,
+          tmpSelectedPiece,
           rawMoveSet,
           BoardState 
         )
 
-        if(validatedMoveSet) moveSet = validatedMoveSet
-        else {
-          selectedPiece = PieceHelper.isLight(selectedPiece) ? "l" : "L"
-          const newRawMoveSet = PieceHelper.getMoveSet(selectedPiece, BoardState)
-          moveSet = utils.ValidateMoveSet(
-            selectedPiece,
+        if(typeof(validatedMoveSet) === "object") {
+          selectedPiece = tmpSelectedPiece
+          moveSet = validatedMoveSet
+        } else {
+          // Once validatedMoveset is falsey, it returns new id of piece on temple/needs to be moved
+          const newTmpSelectedPiece = validatedMoveSet
+          const newRawMoveSet = PieceHelper.getMoveSet(newTmpSelectedPiece, BoardState)
+          const newValidatedMoveSet = utils.ValidateMoveSet(
+            newTmpSelectedPiece,
             newRawMoveSet,
             BoardState
           )
+
+          if(typeof(newValidatedMoveSet) === "object") {
+            moveSet = newValidatedMoveSet
+            selectedPiece = newTmpSelectedPiece
+          }
         }
       }
     } else if (intersects.length) {
@@ -380,7 +388,7 @@ const updateFunc = time => {
       // selectedPiece = undefined
       // moveSet = []
           
-      // It's fine
+      // Uncomment at your own risk, it will cause a bug
     }
 
     isCastingRay = false

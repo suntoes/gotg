@@ -71,12 +71,14 @@ export const DetectWinByTrap = (BoardState) => {
 export const ValidateMoveSet = (selectedPiece, moveSet, BoardState) => {
   const { isLight, isLeader, getMoveSet } = PieceHelper;
   const { remainingMoves } = TurnCountToSystem(BoardState.turnCount);
+  const selectedIsLight = isLight(selectedPiece)
   const baseTemples = isLight(selectedPiece) ? [7, 52] : [75, 120];
   const temples = [7, 52, 75, 120];
   const { pieces } = BoardState;
   let filteredMoveSet = moveSet;
   let pieceOnTemple = null;
-  let passToLeader = false;
+  // Ability to return id string of piece to focus on reevaluation of moveset
+  let passToThisPiece = false;
 
   // Detects if there's piece on temple and what piece is it
   for (let piece in pieces) {
@@ -86,7 +88,8 @@ export const ValidateMoveSet = (selectedPiece, moveSet, BoardState) => {
         (isLeader(piece) ? baseTemples : temples).includes(n)
       )
     )
-      pieceOnTemple = piece;
+      // Ensure focus on moveset validation is stayed on current turn
+      pieceOnTemple = selectedIsLight === isLight(piece) ? piece : null;
   }
 
   // Disable move that'll land unto the temple if there's only 1 move left
@@ -100,7 +103,7 @@ export const ValidateMoveSet = (selectedPiece, moveSet, BoardState) => {
   // Condition if selected piece is not the one resting on temple
   else if (pieceOnTemple && selectedPiece !== pieceOnTemple) {
     // Block all move if remaining move is the last
-    if (remainingMoves === 1) passToLeader = true;
+    if (remainingMoves === 1) passToThisPiece = pieceOnTemple;
     // Removes move that will block pieceOnTemple inside before last move
     else if (remainingMoves === 2) {
       const makeBoardState = (boardState, targetPiece, move) => {
@@ -120,5 +123,5 @@ export const ValidateMoveSet = (selectedPiece, moveSet, BoardState) => {
     }
   }
 
-  return passToLeader ? false : filteredMoveSet;
+  return passToThisPiece ? passToThisPiece : filteredMoveSet;
 };
