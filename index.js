@@ -6,7 +6,7 @@ import * as loaders from './lib/model-loader.js'
 import PieceHelper from './lib/piece_structure/index.js'
 import { FENLoader, convertToFEN } from './lib/board-loader.js'
 
-let container = document.getElementById('board')
+let container = document.getElementById('gotg-board')
 let renderer = new THREE.WebGLRenderer({alpha: true, antialias: true})
 let camera = new THREE.PerspectiveCamera(
   70,
@@ -43,7 +43,7 @@ const handleWindowResize = () => {
 }
 
 const updateGui = boardState => {
-  const gui = document.getElementById('gui')
+  const gui = document.getElementById('gotg-gui')
   const { remainingMoves, currentTurn } = utils.TurnCountToSystem(boardState.turnCount)
   let announcement = 
     boardState.winner
