@@ -1,12 +1,12 @@
 /*__crafted with <3 by suntoes for Maya Chess__*/
 
-import { OrbitControls } from './gotg-lib/orbit-controls.js'
-import * as utils from './gotg-lib/game-maths.js'
-import * as loaders from './gotg-lib/model-loader.js'
-import PieceHelper from './gotg-lib/piece_structure/index.js'
-import { FENLoader, convertToFEN } from './gotg-lib/board-loader.js'
+import { OrbitControls } from './lib/orbit-controls.js'
+import * as utils from './lib/game-maths.js'
+import * as loaders from './lib/model-loader.js'
+import PieceHelper from './lib/piece_structure/index.js'
+import { FENLoader, convertToFEN } from './lib/board-loader.js'
 
-let container = document.getElementById('gotg-board')
+let container = document.getElementById('board')
 let renderer = new THREE.WebGLRenderer({alpha: true, antialias: true})
 let camera = new THREE.PerspectiveCamera(
   70,
@@ -43,7 +43,7 @@ const handleWindowResize = () => {
 }
 
 const updateGui = boardState => {
-  const gui = document.getElementById('gotg-gui')
+  const gui = document.getElementById('gui')
   const { remainingMoves, currentTurn } = utils.TurnCountToSystem(boardState.turnCount)
   let announcement = 
     boardState.winner
@@ -58,16 +58,16 @@ const updateGui = boardState => {
 
 const init = () => {
   Promise.all([
-    loaders.ModelLoaderOBJ('./gotg-models/temple.obj'), // 0
-    loaders.ModelLoaderOBJ('./gotg-models/leader.obj'),
-    loaders.ModelLoaderOBJ('./gotg-models/defender.obj'),
-    loaders.ModelLoaderOBJ('./gotg-models/captain.obj'),
-    loaders.ModelLoaderOBJ('./gotg-models/guardian.obj'), // 4
-    loaders.ModelLoaderOBJ('./gotg-models/attacker.obj'),
-    loaders.ModelLoaderOBJ('./gotg-models/attacker-1.obj'),
-    loaders.ModelLoaderOBJ('./gotg-models/attacker-2.obj'),
-    loaders.ModelLoaderOBJ('./gotg-models/defender-1.obj'), // 8
-      loaders.ModelLoaderOBJ('./gotg-models/board.obj')
+    loaders.ModelLoaderOBJ('./models/temple.obj'), // 0
+    loaders.ModelLoaderOBJ('./models/leader.obj'),
+    loaders.ModelLoaderOBJ('./models/defender.obj'),
+    loaders.ModelLoaderOBJ('./models/captain.obj'),
+    loaders.ModelLoaderOBJ('./models/guardian.obj'), // 4
+    loaders.ModelLoaderOBJ('./models/attacker.obj'),
+    loaders.ModelLoaderOBJ('./models/attacker-1.obj'),
+    loaders.ModelLoaderOBJ('./models/attacker-2.obj'),
+    loaders.ModelLoaderOBJ('./models/defender-1.obj'), // 8
+      loaders.ModelLoaderOBJ('./models/board.obj')
   ]).then(Meshes => {
       let piece
       let isBlack
