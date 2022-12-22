@@ -58,16 +58,16 @@ const updateGui = boardState => {
 
 const init = () => {
   Promise.all([
-    loaders.ModelLoaderOBJ('./models/temple.obj'), // 0
-    loaders.ModelLoaderOBJ('./models/leader.obj'),
-    loaders.ModelLoaderOBJ('./models/defender.obj'),
-    loaders.ModelLoaderOBJ('./models/captain.obj'),
-    loaders.ModelLoaderOBJ('./models/guardian.obj'), // 4
-    loaders.ModelLoaderOBJ('./models/attacker.obj'),
-    loaders.ModelLoaderOBJ('./models/attacker-1.obj'),
-    loaders.ModelLoaderOBJ('./models/attacker-2.obj'),
-    loaders.ModelLoaderOBJ('./models/defender-1.obj'), // 8
-      loaders.ModelLoaderOBJ('./models/board.obj')
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/temple.obj'), // 0
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/leader.obj'),
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/defender.obj'),
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/captain.obj'),
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/guardian.obj'), // 4
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/attacker.obj'),
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/attacker-1.obj'),
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/attacker-2.obj'),
+    loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/defender-1.obj'), // 8
+      loaders.ModelLoaderOBJ('https://suntoes.github.io/gotg/models/board.obj')
   ]).then(Meshes => {
       let piece
       let isBlack
